@@ -117,6 +117,7 @@ sub create_backup {
         my $parent_dir = dirname($BACKUP_PATH);
         my $bak_name   = basename($BACKUP_PATH);
 
+        say "Start archiving...";
         my $output = `tar -cf '$tar_path' --xattrs -C '$parent_dir' '$bak_name' 2>&1`;
         die "ERROR: Failed to create tar archive: $output" if $?;
         say "Tar archive created: $tar_path" unless $QUIET;
@@ -135,7 +136,7 @@ GetOptions(
 usage() if $HELP;
 
 die "Download 'rsync' dude, plss"         if !check_command('rsync');
-die "You dont have 'tar' program?? Wtf??" if !check_command('tar');
+die "You dont have 'tar' program?? Wtf??" if $TAR && !check_command('tar');
 
 $BACKUP_LIST = $BACKUP_LIST_DEFAULT unless $BACKUP_LIST;
 $BACKUP_PATH = $BACKUP_PATH_DEFAULT unless $BACKUP_PATH;
