@@ -89,7 +89,7 @@ sub create_backup {
         
         if (-e $src_path) {
             push @paths, $src_path;
-            say "Will be added to backup: $src_path" unless $QUIET;
+            say "Will be synchronized: $src_path" unless $QUIET;
         } else {
             warn "WARNING: '$src_path' does not exist";
         }
@@ -104,10 +104,10 @@ sub create_backup {
     my $cmd = "rsync -avxR --delete $exclude_opts --progress $src_list '$BACKUP_PATH/' 2>&1";
     
     say "Starting backup..." unless $QUIET;
-    say "Running: $cmd" if $VERBOSE;
+    say "Running: $cmd" if $VERBOSE && !$QUIET;
     
     my $output = `$cmd`;
-    say $output if $VERBOSE;
+    say $output if $VERBOSE && !$QUIET;
     die "ERROR: rsync failed" if $?;
     
     say "Backup completed: '$BACKUP_PATH'" unless $QUIET;
