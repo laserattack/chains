@@ -9,8 +9,8 @@ ark - simple and dirty script for making backups
 Usage: ark [-lpth]
 
 Flags:
-  -l, --list FILE   Backup list file (default: '/home/serr/.ark/list')
-  -p, --path DIR    Backup dir path (default: '/home/serr/.ark/bak')
+  -l, --list FILE   Backup list file (default: /home/serr/.ark/list)
+  -p, --path DIR    Backup dir path (default: /home/serr/.ark/bak)
   -t, --tar         Create tar archive from backup directory
                     and put it near backup dir
   -h, --help        This help
