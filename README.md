@@ -6,7 +6,7 @@ A very simple and dirty script that I use for backups
 
 ```
 ark - simple script for making backups
-Usage: /home/serr/.local/bin/ark [-lptqvh]
+Usage: ark [-lptqvh]
 
 Flags:
   -l, --list FILE   Backup list file (default: '/home/serr/.ark/list')
