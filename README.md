@@ -27,7 +27,7 @@ Notes:
 
 Examples:
   ark
-  ark --tar="/run/media/serr/KINGSTON/bak_$(date +%y%m%dT%H%M%S).tar"
+  ark --tar="/run/media/serr/KINGSTON/baks/bak_$(date +%y%m%dT%H%M%S).tar"
 
 Backup list file example:
   # exclude patterns
