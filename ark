@@ -29,7 +29,7 @@ sub check_command {
 
 sub usage {
     say "ark - simple and dirty script for making incremental backups";
-    say "Usage: ark [-hdi]";
+    say "Usage: ark [-hifd]";
     say "";
     say "Flags:";
     say "  -h, --help         This help";
