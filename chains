@@ -93,12 +93,12 @@ sub make_backup {
                        '-czf',  $backup_file);
 
     my $tar_command_string = join ' ', map { $_ =~ /[\s]/ ? "'$_'" : $_ } @tar_command;
-    say "Tar command: $tar_command_string";
+    say "INFO: Tar command: $tar_command_string";
 
     my $ret = system(@tar_command);
 
     die "ERROR: Backup failed with exit code: " . ($? >> 8) unless $ret == 0;
-    say "Backup completed: $backup_file";
+    say "INFO: Backup completed: $backup_file";
 }
 
 sub main {
@@ -107,22 +107,22 @@ sub main {
 
     # check and create if no exists
     verify_dir($MAIN_DIR);
-    say "Main dir: $MAIN_DIR";
+    say "INFO: Main dir: $MAIN_DIR";
 
     # check and create if no exists
     my $include_paths_file = File::Spec->catfile($MAIN_DIR, 'include_paths.txt');
     verify_file($include_paths_file);
-    say "Include paths file: $include_paths_file";
+    say "INFO: Include paths file: $include_paths_file";
 
     # check and create if no exists
     my $exclude_patterns_file = File::Spec->catfile($MAIN_DIR, 'exclude_patterns.txt');
     verify_file($exclude_patterns_file);
-    say "Exclude patterns file: $exclude_patterns_file";
+    say "INFO: Exclude patterns file: $exclude_patterns_file";
 
     # check and create if no exists
     my $backups_dir = File::Spec->catdir($MAIN_DIR, 'chains');
     verify_dir($backups_dir);
-    say "Backups dir: $backups_dir";
+    say "INFO: Backups dir: $backups_dir";
 
     # ==== MAKE BACKUP ====
 
@@ -134,7 +134,7 @@ sub main {
     while (my $line = <$fh>) {
         chomp $line;
         next if $line =~ /^\s*$/; # empty lines are OK
-        die "Only absolute paths should be in '$include_paths_file'" unless $line =~ /^\//;
+        die "ERROR: Only absolute paths should be in '$include_paths_file'" unless $line =~ /^\//;
     }
     close $fh or die "ERROR: Cannot close file: $!";
     
@@ -148,11 +148,11 @@ sub main {
         my $backup_dir = File::Spec->catdir($backups_dir, 'since_'.$timestamp);
         die "ERROR: '$backup_dir' already exists" if -d $backup_dir;
         verify_dir($backup_dir);
-        say "Creating new backup chain in: $backup_dir";
+        say "INFO: Creating new backup chain in: $backup_dir";
 
         # tar will create it itself if no exists
         my $snar_file = File::Spec->catfile($backup_dir, 'incremental.snar');
-        say "Snar file: $snar_file";
+        say "INFO: Snar file: $snar_file";
         my $backup_file = File::Spec->catfile($backup_dir, "${timestamp}.tar.gz");
 
         die "ERROR: Backup file '$backup_file' already exists" if -f $backup_file;
@@ -181,7 +181,7 @@ sub main {
 
         # tar will create it itself if no exists
         my $snar_file = File::Spec->catfile($backup_dir, 'incremental.snar');
-        say "Snar file: $snar_file";
+        say "INFO: Snar file: $snar_file";
         my $backup_file = File::Spec->catfile($backup_dir, "${timestamp}.tar.gz");
 
         die "ERROR: Backup file '$backup_file' already exists" if -f $backup_file;
