@@ -6,7 +6,7 @@ Simple script that I use for backups
 
 ```
 chains - simple script for making incremental backups
-Usage: chains [-hifrgd]
+Usage: chains [-hpifrgd]
 
 Flags:
   -h, --help                 This help
@@ -30,22 +30,28 @@ Notes:
 
 # Examples
 
-I wrote this to back up medium-important data to an external hard drive, so the usual usage looks like this
+I wrote this script to back up moderately important data to an external hard drive. Here's how I typically use it:
 
-Once a week
+**Weekly full backup:**
 
 ```
 chains --dir "/run/media/serr/KINGSTON/.chains" --full
 ```
 
-Several times a day
+**Multiple daily incremental backups:**
 
 ```
 chains --dir "/run/media/serr/KINGSTON/.chains" --incremental
 ```
 
-Restoring a backup to selectively check if everything is working properly
+**Verify backup integrity by restoring to a temporary location:**
 
 ```
 chains --dir "/run/media/serr/KINGSTON/.chains" --goto "/home/serr/projects/temp/" --recover
+```
+
+**Display all existing backup chains:**
+
+```
+chains --dir "/run/media/serr/KINGSTON/.chains" --print
 ```
