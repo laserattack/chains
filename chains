@@ -8,7 +8,7 @@ use File::Spec;
 use POSIX 'strftime';
 use Getopt::Long qw\:config bundling\;
 
-my $MAIN_DIR_DEFAULT = "$ENV{HOME}/.ark";
+my $MAIN_DIR_DEFAULT = "$ENV{HOME}/.chains";
 
 # flags
 
@@ -28,8 +28,8 @@ sub check_command {
 }
 
 sub usage {
-    say "ark - simple and dirty script for making incremental backups";
-    say "Usage: ark [-hifd]";
+    say "chains - simple script for making incremental backups";
+    say "Usage: chains [-hifd]";
     say "";
     say "Flags:";
     say "  -h, --help         This help";
@@ -53,8 +53,8 @@ sub verify_permissions {
 sub verify_dir {
     my ($path) = @_;
     unless (-d $path) {
-        warn "WARNING: '$path' is not a dir";
-        warn "Try to create '$path'...";
+        say "INFO: '$path' is not a dir";
+        say "INFO: Try to create '$path'...";
         eval { make_path($path); };
         die "ERROR: Cannot create path '$path': $@" if $@;
         die "ERROR: '$path' is not a valid dir" unless -d $path;
@@ -65,8 +65,8 @@ sub verify_dir {
 sub verify_file {
     my ($path) = @_;
     unless (-f $path) {
-        warn "WARNING: '$path' is not a file";
-        warn "Try to create '$path'...";
+        say "INFO: '$path' is not a file";
+        say "INFO: Try to create '$path'...";
         eval {
             open my $fh, '>', $path or die "Cannot create file: $!";
             close $fh;
@@ -119,7 +119,7 @@ sub main {
     say "Exclude patterns file: $exclude_patterns_file";
 
     # check and create if no exists
-    my $backups_dir = File::Spec->catdir($MAIN_DIR, 'backups');
+    my $backups_dir = File::Spec->catdir($MAIN_DIR, 'chains');
     verify_dir($backups_dir);
     say "Backups dir: $backups_dir";
 
@@ -137,15 +137,15 @@ sub main {
         # a chain of incremental backups in a timestamped folder
         # full backup = first backup in chain
         
-        my $backup_dir = File::Spec->catdir($backups_dir, $timestamp);
+        my $backup_dir = File::Spec->catdir($backups_dir, 'since_'.$timestamp);
         die "ERROR: '$backup_dir' already exists" if -d $backup_dir;
         verify_dir($backup_dir);
         say "Creating new backup chain in: $backup_dir";
 
         # tar will create it itself if no exists
-        my $snar_file = File::Spec->catfile($backup_dir, 'inc.snar');
+        my $snar_file = File::Spec->catfile($backup_dir, 'incremental.snar');
         say "Snar file: $snar_file";
-        my $backup_file = File::Spec->catfile($backup_dir, "backup_${timestamp}.tar.gz");
+        my $backup_file = File::Spec->catfile($backup_dir, "${timestamp}.tar.gz");
 
         die "ERROR: Backup file '$backup_file' already exists" if -f $backup_file;
 
@@ -163,8 +163,8 @@ sub main {
         # incremental backup = backup to latest backup chain
 
         # try found latest backup chain
-        opendir(my $dh, $backups_dir) or return undef;
-        my @dirs = grep { -d "$backups_dir/$_" && /^\d{6}T\d{6}$/ } readdir($dh);
+        opendir(my $dh, $backups_dir) or die "ERROR: Cant open dir '$backups_dir'";
+        my @dirs = grep { -d "$backups_dir/$_" && /^since_\d{6}T\d{6}$/ } readdir($dh);
         closedir($dh);
         @dirs = sort { $b cmp $a } @dirs;
         my $backup_dir = $dirs[0] ? File::Spec->catdir($backups_dir, $dirs[0]) : undef;
@@ -172,9 +172,9 @@ sub main {
         die "ERROR: No existing backup chain found" unless $backup_dir;
 
         # tar will create it itself if no exists
-        my $snar_file = File::Spec->catfile($backup_dir, 'inc.snar');
+        my $snar_file = File::Spec->catfile($backup_dir, 'incremental.snar');
         say "Snar file: $snar_file";
-        my $backup_file = File::Spec->catfile($backup_dir, "backup_${timestamp}.tar.gz");
+        my $backup_file = File::Spec->catfile($backup_dir, "${timestamp}.tar.gz");
 
         die "ERROR: Backup file '$backup_file' already exists" if -f $backup_file;
 
