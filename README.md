@@ -38,7 +38,7 @@ I wrote this script to back up moderately important data to an external drive. H
 chains -fd $KINGSTON/chains
 ```
 
-**Multiple daily incremental backups:**
+**Daily incremental backups (run as often as needed):**
 
 ```
 chains -id $KINGSTON/chains
