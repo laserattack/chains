@@ -1,3 +1,5 @@
+![chains](chains.jpg)
+
 # Wtf??
 
 Simple script that I use for backups
