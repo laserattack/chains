@@ -57,3 +57,31 @@ chains -pd $KINGSTON/chains
 ```
 
 > Note: $KINGSTON is a variable defined in my `.bashrc` pointing to the mount point of my external drive
+
+# Installation
+
+Just download somewhere
+
+```
+wget https://raw.githubusercontent.com/laserattack/chains/refs/heads/master/chains
+```
+
+Make it executable
+
+```
+chmod +x chains
+```
+
+And use
+
+```
+./chains
+```
+
+Optionally, you can add the script to your PATH
+
+# Requirements
+
+- Linux system
+- Perl 5.10 or newer
+- tar
