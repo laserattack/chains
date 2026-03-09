@@ -30,7 +30,7 @@ Notes:
 
 # Examples
 
-I wrote this script to back up moderately important data to an external hard drive. Here's how I typically use it:
+I wrote this script to back up moderately important data to an external drive. Here's how I typically use it:
 
 **Weekly full backup:**
 
