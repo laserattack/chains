@@ -135,7 +135,8 @@ sub main {
     if ($FULL) {
 
         # a chain of incremental backups in a timestamped folder
-
+        # full backup = first backup in chain
+        
         my $backup_dir = File::Spec->catdir($backups_dir, $timestamp);
         die "ERROR: '$backup_dir' already exists" if -d $backup_dir;
         verify_dir($backup_dir);
