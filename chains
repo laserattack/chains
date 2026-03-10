@@ -158,7 +158,7 @@ sub extract {
     my $tar = check_command('tar');
     die "ERROR: 'tar' program is required, but not found in PATH\n" unless $tar;
     
-    say "INFO: Extracting '$src' to '$dest'";
+    say "INFO: Extracting '$src'";
     
     my @cmd = ($tar, '-xzf', $src, '-C', $dest);
     my $ret = system(@cmd);
@@ -204,7 +204,7 @@ sub restore_backup {
         extract($backup_path, $restore_dir);
     }
     
-    say "INFO: Restored state $RECOVER to " . getcwd();
+    say "INFO: Restored state '$RECOVER' to " . getcwd();
 }
 
 sub make_backup {
@@ -340,7 +340,7 @@ GetOptions(
         'main-directory|m=s' => \$MAIN_DIR,
         'incremental|i'      => \$INCREMENTAL,
         'full|f'             => \$FULL,
-        'recover|r:s'        => \$RECOVER,
+        'recover|r'          => sub { $RECOVER = 'latest' },
         'directory|C:s'      => \$DIR,
         'print|p'            => \$PRINT,
     ) or die "ERROR: Invalid command line options\n";
@@ -355,15 +355,14 @@ if (defined $DIR) {
     say "INFO: Now in: " . getcwd();
 }
 
-if (defined $RECOVER) {
-    if ($RECOVER eq '' || $RECOVER eq 'latest') {
-        say "INFO: Recovering state: latest";
-        $RECOVER = 'latest';
-    } elsif ($RECOVER =~ /^\d{6}T\d{6}$/) {
-        say "INFO: Recovering state: $RECOVER";
+if ($RECOVER) {
+    my $timestamp = shift @ARGV;
+    if ($timestamp && $timestamp =~ /^\d{6}T\d{6}$/) {
+        $RECOVER = $timestamp;
     } else {
-        die "ERROR: Invalid timestamp format\n";
+        unshift @ARGV, $timestamp if $timestamp;
     }
+    say "INFO: Recovering state: $RECOVER";
 }
 
 $MAIN_DIR = $MAIN_DIR_DEFAULT unless $MAIN_DIR;
