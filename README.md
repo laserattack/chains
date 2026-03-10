@@ -8,7 +8,7 @@ Simple script for backups
 
 ```
 chains - incremental backups without any bullshit
-Usage: chains [-hmifrCp]
+Usage: chains [-hmifrCpv]
 
 Flags:
   -h, --help                 This help
@@ -21,6 +21,7 @@ Flags:
   -C, --directory DIR        Change to DIR before any operation
                              If DIR omitted, goes to HOME directory
   -p, --print                Print all backup chains structure
+  -v, --verbose              Verbosely list files processed
 
 Notes:
   1. TAR IS REQUIRED
