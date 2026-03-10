@@ -185,7 +185,7 @@ sub find_chain_and_backup {
         return ($chain_name, $backups, $#{$backups});
     }
 
-    CHAIN: foreach my $chain_ref (@$chains_structure) {
+    foreach my $chain_ref (@$chains_structure) {
         my ($chain_name, $backups) = @$chain_ref;
         
         foreach my $i (0 .. $#$backups) {
