@@ -2,7 +2,7 @@
 
 # Wtf??
 
-Simple script that for backups
+Simple script for backups
 
 # Usage
 
