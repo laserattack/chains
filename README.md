@@ -61,7 +61,7 @@ chains -wm $KINGSTON/chains/
 chains -rm $KINGSTON/chains/ -C ~/projects/temp/
 ```
 
-**Restore concrete backup:**
+**Restore concrete backup using timestamp:**
 
 ```
 chains -r 260309T205505 -m $KINGSTON/chains/ -C ~/projects/temp/
