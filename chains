@@ -163,10 +163,10 @@ sub print_chains_structure {
 
     for my $i (0 .. $#$chains_structure) {
         my ($chain_name, $backups) = @{$chains_structure->[$i]};
-        say "Chain: $chain_name";
+        say "Chain        $chain_name";
         foreach my $j (0 .. $#$backups) {
             my $backup = $backups->[$j];
-            say $j == 0 ? "Full: $backup" : "Incremental: $backup";
+            say $j == 0 ? "Full         $backup" : "Incremental  $backup";
         }
         say "" if $i < $#$chains_structure;
     }
