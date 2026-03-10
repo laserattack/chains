@@ -102,9 +102,9 @@ When you run **chains**, it automatically checks and creates (if missing) the re
 
 ```
 MAIN_DIR/
-├── include_paths.txt    # List paths to backup (one per line, absolute paths only)
-├── exclude_patterns.txt # Patterns to exclude (tar format)
-└── chains/              # All backups stored here
+├── include_paths.txt     # List paths to backup (one per line, absolute paths only)
+├── exclude_patterns.txt  # Patterns to exclude (tar format)
+└── chains/               # All backups stored here
 ```
 
 A **chain** is a sequence of backups (`tar.gz` archives), where the first backup is full and all subsequent backups are incremental (containing only changes since the previous backup).
@@ -121,12 +121,12 @@ chains -fm /path/to/main/dir
 
 ```
 MAIN_DIR/
-├── chains                              # All backups stored here
-│   └── since_260309T200625             # Chain directory
-│       ├── [2.0G] 260309T200625.tar.gz # Full backup
-│       └── incremental.snar            # Metadata file for incremental backups
-├── exclude_patterns.txt                # Patterns to exclude (tar format)
-└── include_paths.txt                   # List paths to backup (one per line, absolute paths only)
+├── chains                               # All backups stored here
+│   └── since_260309T200625              # Chain directory
+│       ├── [2.0G] 260309T200625.tar.gz  # Full backup
+│       └── incremental.snar             # Metadata file for incremental backups
+├── exclude_patterns.txt                 # Patterns to exclude (tar format)
+└── include_paths.txt                    # List paths to backup (one per line, absolute paths only)
 ```
 
 ## Adding incremental backups
@@ -141,42 +141,42 @@ After the first incremental backup, the chain folder will look like this:
 
 ```
 MAIN_DIR/
-├── chains                              # All backups stored here
-│   └── since_260309T200625             # Chain directory
-│       ├── [2.0G] 260309T200625.tar.gz # Full backup
-│       ├── [1.2M] 260309T202739.tar.gz # First incremental backup
-│       └── incremental.snar            # Metadata
-├── exclude_patterns.txt                # Patterns to exclude (tar format)
-└── include_paths.txt                   # List paths to backup (one per line, absolute paths only)
+├── chains                               # All backups stored here
+│   └── since_260309T200625              # Chain directory
+│       ├── [2.0G] 260309T200625.tar.gz  # Full backup
+│       ├── [1.2M] 260309T202739.tar.gz  # First incremental backup
+│       └── incremental.snar             # Metadata
+├── exclude_patterns.txt                 # Patterns to exclude (tar format)
+└── include_paths.txt                    # List paths to backup (one per line, absolute paths only)
 ```
 
 As you continue taking incremental backups, they are added to the same chain:
 
 ```
 MAIN_DIR/
-├── chains                              # All backups stored here
-│   └── since_260309T200625             # Chain directory
-│       ├── [2.0G] 260309T200625.tar.gz # Full backup
-│       ├── [1.2M] 260309T202739.tar.gz # Incremental backup
-│       ├── [1.2M] 260309T202747.tar.gz # Incremental backup
-│       ├── [1.5M] 260309T205505.tar.gz # Incremental backup
-│       ├── [1.4M] 260309T211003.tar.gz # Incremental backup
-│       ├── [1.7M] 260309T220534.tar.gz # Incremental backup
-│       ├── [1.2M] 260309T221151.tar.gz # Incremental backup
-│       ├── [1.5M] 260310T131826.tar.gz # Incremental backup
-│       ├── [1.5M] 260310T133139.tar.gz # Incremental backup
-│       ├── [221M] 260310T133328.tar.gz # Incremental backup (lots of changes)
-│       ├── [1.3M] 260310T133457.tar.gz # Incremental backup
-│       ├── [1.4M] 260310T135812.tar.gz # Incremental backup
-│       ├── [1.6M] 260310T153300.tar.gz # Incremental backup
-│       ├── [1.3M] 260310T153454.tar.gz # Incremental backup
-│       ├── [1.3M] 260310T153504.tar.gz # Incremental backup
-│       ├── [1.3M] 260310T153509.tar.gz # Incremental backup
-│       ├── [1.6M] 260310T154758.tar.gz # Incremental backup
-│       ├── [1.9M] 260310T164949.tar.gz # Incremental backup
-│       └── incremental.snar            # Metadata
-├── exclude_patterns.txt                # Patterns to exclude (tar format)
-└── include_paths.txt                   # List paths to backup (one per line, absolute paths only)
+├── chains                               # All backups stored here
+│   └── since_260309T200625              # Chain directory
+│       ├── [2.0G] 260309T200625.tar.gz  # Full backup
+│       ├── [1.2M] 260309T202739.tar.gz  # Incremental backup
+│       ├── [1.2M] 260309T202747.tar.gz  # Incremental backup
+│       ├── [1.5M] 260309T205505.tar.gz  # Incremental backup
+│       ├── [1.4M] 260309T211003.tar.gz  # Incremental backup
+│       ├── [1.7M] 260309T220534.tar.gz  # Incremental backup
+│       ├── [1.2M] 260309T221151.tar.gz  # Incremental backup
+│       ├── [1.5M] 260310T131826.tar.gz  # Incremental backup
+│       ├── [1.5M] 260310T133139.tar.gz  # Incremental backup
+│       ├── [221M] 260310T133328.tar.gz  # Incremental backup (lots of changes)
+│       ├── [1.3M] 260310T133457.tar.gz  # Incremental backup
+│       ├── [1.4M] 260310T135812.tar.gz  # Incremental backup
+│       ├── [1.6M] 260310T153300.tar.gz  # Incremental backup
+│       ├── [1.3M] 260310T153454.tar.gz  # Incremental backup
+│       ├── [1.3M] 260310T153504.tar.gz  # Incremental backup
+│       ├── [1.3M] 260310T153509.tar.gz  # Incremental backup
+│       ├── [1.6M] 260310T154758.tar.gz  # Incremental backup
+│       ├── [1.9M] 260310T164949.tar.gz  # Incremental backup
+│       └── incremental.snar             # Metadata
+├── exclude_patterns.txt                 # Patterns to exclude (tar format)
+└── include_paths.txt                    # List paths to backup (one per line, absolute paths only)
 ```
 
 When you want to start a fresh chain (for example, to create a new full backup baseline), simply run:
