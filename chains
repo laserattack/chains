@@ -162,7 +162,7 @@ sub extract {
     my @cmd = ($tar, '-xzf', $src, '-C', $dest);
     my $ret = system(@cmd);
     
-    die "ERROR: Extract failed: $?\n" unless $ret == 0;
+    die "ERROR: Extract failed with exit code: " . ($? >> 8) . "\n" unless $ret == 0;
 }
 
 # restoring a part of the chain to timestamp
