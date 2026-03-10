@@ -98,7 +98,7 @@ Optionally, you can add the script to your PATH
 
 # How it works
 
-When you run chains, it automatically checks and creates (if missing) the required directory structure in your main directory (default: `~/.chains` or custom path with `-m` flag):
+When you run **chains**, it automatically checks and creates (if missing) the required directory structure in your main directory (default: `~/.chains` or custom path with `-m` flag):
 
 ```
 MAIN_DIR/
@@ -117,7 +117,7 @@ To start a new chain, create a full backup with:
 chains -fm /path/to/main/dir
 ```
 
-chains will create a folder for the chain and place the first backup there:
+**chains** will create a folder for the chain and place the first backup there:
 
 ```
 MAIN_DIR/
