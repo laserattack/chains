@@ -185,7 +185,7 @@ When you want to start a fresh chain (for example, to create a new full backup b
 chains -fm /path/to/main/dir
 ```
 
-This creates a new timestamped folder (e.g., since_260310T170000) and places a new full backup there. All subsequent incremental backups with `-i` will be added to this newest chain.
+This creates a new timestamped folder (e.g., `since_260310T170000`) and places a new full backup there. All subsequent incremental backups with `-i` will be added to this newest chain.
 
 ## Restoring data
 
