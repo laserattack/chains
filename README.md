@@ -15,10 +15,9 @@ Flags:
   -m, --main-directory DIR   Main program directory (default: /home/serr/.chains)
   -i, --incremental          Make incremental backup (to the last chain)
   -f, --full                 Make full backup (new chain)
-  -r, --recover [TIMESTAMP]  Restoring the chain to the specified timestamp
+  -r, --recover [TIMESTAMP]  Restore the chain to the specified timestamp
                              If TIMESTAMP omitted, recovers latest state
                              TIMESTAMP format: YYMMDDTHHMMSS (e.g. 250309T143045)
-                             Use 'latest' explicitly if needed (default when omitted)
   -C, --directory DIR        Change to DIR before any operation
                              If DIR omitted, goes to HOME directory
   -p, --print                Print all backup chains structure
