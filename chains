@@ -45,10 +45,15 @@ sub usage {
     say "  -f, --full                 Make full backup (new chain)";
     say "  -r, --recover [TIMESTAMP]  Restore the chain to the specified timestamp";
     say "                             If TIMESTAMP omitted, recovers latest state";
-    say "                             TIMESTAMP format: YYMMDDTHHMMSS (e.g. 250309T143045)";
-    say "  -w, --verify [TIMESTAMP]   Verify integrity of chain up to specified timestamp";
-    say "                             If TIMESTAMP omitted, verifies entire latest chain";
-    say "                             TIMESTAMP format: YYMMDDTHHMMSS (e.g. 250309T143045)";
+    say "                             TIMESTAMP can be: YYMMDDTHHMMSS or 'latest'";
+    say "  -w, --verify [TIMESTAMP]   Verify integrity of chain";
+    say "                             Format: TIMESTAMP | TIMESTAMP:TIMESTAMP";
+    say "                             TIMESTAMP: YYMMDDTHHMMSS or 'latest'";
+    say "                             Examples: 250309T143045";
+    say "                                       latest";
+    say "                                       250309T143045:250310T102030";
+    say "                                       250309T143045:latest";
+    say "                                       latest:latest";
     say "  -C, --directory DIR        Change to DIR before any operation";
     say "  -p, --print                Print all backup chains structure";
     say "  -v, --verbose              Verbosely list files processed";
@@ -171,7 +176,13 @@ sub format_bytes {
         $unit++;
     }
 
-    return sprintf("%d%s", $size, $units[$unit]);
+    if ($unit == 0) {
+        # for bytes
+        return sprintf("%d%s", $size, $units[$unit]);
+    } else {
+        # everything except bytes
+        return sprintf("%.2f%s", $size, $units[$unit]);
+    }
 }
 
 sub print_chains_structure {
@@ -279,21 +290,38 @@ sub verify {
     die "ERROR: Verify failed with exit code: " . ($? >> 8) . "\n" unless $ret == 0;
 }
 
+
+# Parse verification string - either TIMESTAMP or TIMESTAMP:TIMESTAMP format
 sub verify_subchain {
-    my ($backups_dir) = @_;
+    my ($backups_dir)    = @_;
     my $chains_structure = get_chains_structure($backups_dir);
 
-    my ($target_chain_name, $target_chain_backups, $target_index) = find_chain_and_backup($chains_structure, $VERIFY);
+    my ($start_timestamp, $end_timestamp) = (undef, undef);
 
-    die "ERROR: No backup found with timestamp: $VERIFY\n" unless defined $target_chain_name;
+    # validation of the fact that there is either $timestamp or $timestamp:$timestamp during flag processing
+    ($start_timestamp, $end_timestamp) = ($VERIFY =~ /:/) ? split(/:/, $VERIFY) : (undef, $VERIFY);
 
-    foreach my $i (0 .. $target_index) {
-        my $backup_name = $target_chain_backups->[$i];
-        my $backup_path = File::Spec->catfile($backups_dir, $target_chain_name, $backup_name);
+    my ($start_chain_name, $start_chain_backups, $start_index) = (undef, undef, 0);
+    my ($end_chain_name, $end_chain_backups, $end_index)       = find_chain_and_backup($chains_structure, $end_timestamp);
+    die "ERROR: No backup found with timestamp: $end_timestamp\n" unless $end_chain_name;
+
+    if ($start_timestamp) {
+        ($start_chain_name, $start_chain_backups, $start_index) = find_chain_and_backup($chains_structure, $start_timestamp);
+        die "ERROR: No backup found with timestamp: $start_timestamp\n" unless $start_chain_name;
+        die "ERROR: Start and end timestamps must be from the same chain\n" if $start_chain_name ne $end_chain_name;
+    }
+
+    foreach my $i ($start_index .. $end_index) {
+        my $backup_name = $end_chain_backups->[$i];
+        my $backup_path = File::Spec->catfile($backups_dir, $end_chain_name, $backup_name);
         verify($backup_path);
     }
 
-    say "INFO: Chain verification successful up to timestamp: $VERIFY";
+    if ($start_timestamp) {
+        say "INFO: Chain verification successful from $start_timestamp to $end_timestamp";
+    } else {
+        say "INFO: Chain verification successful up to timestamp: $VERIFY";
+    }
 }
 
 sub make_backup {
@@ -491,17 +519,18 @@ if ($RECOVER) {
 }
 
 if ($VERIFY) {
-    my $timestamp = shift @ARGV;
-    if ($timestamp && $timestamp =~ /^\d{6}T\d{6}$/) {
+    my $timestamp_pattern = qr/(?:\d{6}T\d{6}|latest)/;
+    my $timestamp         = shift @ARGV;
+
+    if ($timestamp && ($timestamp =~ /^$timestamp_pattern$/ ||
+                       $timestamp =~ /^$timestamp_pattern:$timestamp_pattern$/)) {
         $VERIFY = $timestamp;
+        say "INFO: Verify chain mode: $VERIFY";
     } else {
         unshift @ARGV, $timestamp if $timestamp;
     }
-    say "INFO: Verify integrity of chain up to: $VERIFY";
 }
 
 $MAIN_DIR = $MAIN_DIR_DEFAULT unless $MAIN_DIR;
 
 main();
-
-my $size = -s "/path/to/file.txt";
