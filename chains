@@ -543,10 +543,10 @@ if ($VERIFY) {
     if ($range && ($range =~ /^$timestamp_pattern$/ ||
                    $range =~ /^$timestamp_pattern:$timestamp_pattern$/)) {
         $VERIFY = $range;
-        say "INFO: Verify chain mode: $VERIFY";
     } else {
         unshift @ARGV, $range if $range;
     }
+    say "INFO: Verify chain mode: $VERIFY";
 }
 
 $MAIN_DIR = $MAIN_DIR_DEFAULT unless $MAIN_DIR;
