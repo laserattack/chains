@@ -370,6 +370,10 @@ sub make_backup {
     my $exitcode = ($? >> 8);
     if ($exitcode == 0) {
         say "INFO: Backup '$backup_file' completed (exitcode: $exitcode)";
+        if (-z $backup_file) {
+            warn "WARNING: Backup '$backup_file' is empty (interrupted?)\n";
+            unlink $backup_file or die "ERROR: Could not delete empty archive: $backup_file\n"
+        }
     } elsif ($exitcode == 1) {
         warn "WARNING: Backup '$backup_file' completed with changed files (exitcode: $exitcode)\n";
     } elsif ($exitcode == 2) {
