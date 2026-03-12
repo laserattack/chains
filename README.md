@@ -27,6 +27,9 @@ Options:
 
   -y, --yes                  Automatically answer yes to all prompts
 
+  -n, --no                   Automatically answer no to all prompts
+                             Overrides --yes
+
   -r, --recover [TIMESTAMP]  Restore the chain to the specified timestamp
                              TIMESTAMP: YYMMDDTHHMMSS | latest
                              If TIMESTAMP omitted, recovers latest state

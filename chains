@@ -16,6 +16,7 @@ my $MAIN_DIR_DEFAULT = "$ENV{HOME}/.chains";
 
 my $HELP        = 0;
 my $YES         = 0;
+my $NO          = 0;
 my $INCREMENTAL = 0;
 my $FULL        = 0;
 my $PRINT       = 0;
@@ -50,6 +51,9 @@ sub usage {
     say "";
     say "  -y, --yes                  Automatically answer yes to all prompts";
     say "";
+    say "  -n, --no                   Automatically answer no to all prompts";
+    say "                             Overrides --yes";
+    say "";
     say "  -r, --recover [TIMESTAMP]  Restore the chain to the specified timestamp";
     say "                             TIMESTAMP: YYMMDDTHHMMSS | latest";
     say "                             If TIMESTAMP omitted, recovers latest state";
@@ -80,11 +84,8 @@ sub usage {
 }
 
 sub go_ahead {
-
-    if ($YES) {
-        say "y";
-        return 1;
-    }
+    if ($NO)  { say "n"; return 0; }
+    if ($YES) { say "y"; return 1; }
 
     chomp(my $input = <STDIN>);
     $input    =~ s/^\s+|\s+$//g;
@@ -511,6 +512,7 @@ sub main {
 GetOptions(
         'help|h'             => \$HELP,
         'yes|y'              => \$YES,
+        'no|n'               => \$NO,
         'main-directory|m=s' => \$MAIN_DIR,
         'incremental|i'      => \$INCREMENTAL,
         'full|f'             => \$FULL,
