@@ -25,6 +25,8 @@ Options:
 
   -f, --full                 Make full backup (new chain)
 
+  -y, --yes                  Automatically answer yes to all prompts
+
   -r, --recover [TIMESTAMP]  Restore the chain to the specified timestamp
                              TIMESTAMP: YYMMDDTHHMMSS | latest
                              If TIMESTAMP omitted, recovers latest state
