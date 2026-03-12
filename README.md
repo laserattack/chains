@@ -18,12 +18,17 @@ Usage: chains [OPTION]...
 
 Options:
   -h, --help                 This help
+
   -m, --main-directory DIR   Main program directory (default: ~/.chains)
+
   -i, --incremental          Make incremental backup (to the last chain)
+
   -f, --full                 Make full backup (new chain)
+
   -r, --recover [TIMESTAMP]  Restore the chain to the specified timestamp
                              TIMESTAMP: YYMMDDTHHMMSS | latest
                              If TIMESTAMP omitted, recovers latest state
+
   -w, --verify [RANGE]       Verify integrity of chain
                              TIMESTAMP: YYMMDDTHHMMSS | latest
                              RANGE: TIMESTAMP | TIMESTAMP:TIMESTAMP
@@ -32,8 +37,13 @@ Options:
                                        250309T143045:250310T102030
                                        250309T143045:latest
                                        latest:latest
+                             If RANGE omitted, verifies the chain
+                             up to the latest state
+
   -C, --directory DIR        Change to DIR before any operation
+
   -p, --print                Print all backup chains structure
+
   -v, --verbose              Verbosely list files processed
 
 Notes:
