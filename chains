@@ -56,11 +56,6 @@ sub usage {
     say "";
     say "  -f, --full                 Make full backup (new chain)";
     say "";
-    say "  -y, --yes                  Automatically answer yes to all prompts";
-    say "";
-    say "  -n, --no                   Automatically answer no to all prompts";
-    say "                             Overrides --yes";
-    say "";
     say "  -r, --recover [TIMESTAMP]  Restore the chain to the specified timestamp";
     say "                             TIMESTAMP: YYMMDDTHHMMSS | latest";
     say "                             If TIMESTAMP omitted, recovers latest state";
@@ -81,6 +76,11 @@ sub usage {
     say "  -p, --print                Print all backup chains structure";
     say "";
     say "  -v, --verbose              Verbosely list files processed";
+    say "";
+    say "  -y, --yes                  Automatically answer yes to all prompts";
+    say "";
+    say "  -n, --no                   Automatically answer no to all prompts";
+    say "                             Overrides --yes";
     say "";
     say "Notes:";
     say "  1. GNU TAR IS REQUIRED";

@@ -26,11 +26,6 @@ Options:
 
   -f, --full                 Make full backup (new chain)
 
-  -y, --yes                  Automatically answer yes to all prompts
-
-  -n, --no                   Automatically answer no to all prompts
-                             Overrides --yes
-
   -r, --recover [TIMESTAMP]  Restore the chain to the specified timestamp
                              TIMESTAMP: YYMMDDTHHMMSS | latest
                              If TIMESTAMP omitted, recovers latest state
@@ -51,6 +46,11 @@ Options:
   -p, --print                Print all backup chains structure
 
   -v, --verbose              Verbosely list files processed
+
+  -y, --yes                  Automatically answer yes to all prompts
+
+  -n, --no                   Automatically answer no to all prompts
+                             Overrides --yes
 
 Notes:
   1. GNU TAR IS REQUIRED
