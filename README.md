@@ -14,6 +14,7 @@ This entire script is essentially a convenient interface to `tar`
 
 ```
 chains - incremental backups without any bullshit
+
 Usage: chains [OPTION]...
 
 Options:
@@ -53,8 +54,11 @@ Options:
 
 Notes:
   1. GNU TAR IS REQUIRED
+
   2. Interrupting backup creation may leave incomplete archives
+
   3. Always verify your backups can be restored
+
   4. EXCLUDE BACKUP DIR FROM BACKUP
 ```
 

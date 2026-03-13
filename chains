@@ -44,6 +44,7 @@ sub check_command {
 
 sub usage {
     say "chains - incremental backups without any bullshit";
+    say "";
     say "Usage: chains [OPTION]...";
     say "";
     say "Options:";
@@ -83,8 +84,11 @@ sub usage {
     say "";
     say "Notes:";
     say "  1. GNU TAR IS REQUIRED";
+    say "";
     say "  2. Interrupting backup creation may leave incomplete archives";
+    say "";
     say "  3. Always verify your backups can be restored";
+    say "";
     say "  4. EXCLUDE BACKUP DIR FROM BACKUP";
     exit 0;
 }
