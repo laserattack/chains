@@ -82,6 +82,7 @@ sub usage {
     say "";
     say "  -n, --no                   Automatically answer no to all prompts";
     say "                             Overrides --yes";
+    say "";
     say "      --no-check-device      Ignore device number changes when";
     say "                             determining changed files";
     say "";
