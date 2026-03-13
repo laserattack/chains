@@ -456,7 +456,7 @@ sub make_backup {
     }
 }
 
-sub bail {
+sub byebye {
     my $msg = shift(@_);
     say $msg if $msg;
     release_lock();
@@ -491,14 +491,14 @@ sub main {
     # ==== SOME STUFF FOR GRACEFUL SHUTDOWN ====
     
     acquire_lock();
-    END { bail(); }
+    END { byebye(); }
 
     # Not strictly necessary (tar handles signals itself), but kept for safety
     $SIG{'HUP'}  = 'IGNORE';
-    $SIG{'INT'}  = sub { bail('INFO: chains was sent INT signal... cleaning up'); };
-    $SIG{'QUIT'} = sub { bail('INFO: chains was sent QUIT signal... cleaning up'); };
-    $SIG{'ABRT'} = sub { bail('INFO: chains was sent ABRT signal... cleaning up'); };
-    $SIG{'TERM'} = sub { bail('INFO: chains was sent TERM signal... cleaning up'); };
+    $SIG{'INT'}  = sub { byebye('INFO: chains was sent INT signal... cleaning up'); };
+    $SIG{'QUIT'} = sub { byebye('INFO: chains was sent QUIT signal... cleaning up'); };
+    $SIG{'ABRT'} = sub { byebye('INFO: chains was sent ABRT signal... cleaning up'); };
+    $SIG{'TERM'} = sub { byebye('INFO: chains was sent TERM signal... cleaning up'); };
 
     # ==== MAIN LOGIC ====
     
