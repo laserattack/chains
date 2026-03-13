@@ -460,7 +460,6 @@ sub byebye {
     my $msg = shift(@_);
     say $msg if $msg;
     release_lock();
-    say "INFO: bye-bye!";
     exit 0;
 }
 
