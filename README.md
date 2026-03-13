@@ -51,6 +51,8 @@ Options:
 
   -n, --no                   Automatically answer no to all prompts
                              Overrides --yes
+      --no-check-device      Ignore device number changes when
+                             determining changed files
 
 Notes:
   1. GNU TAR IS REQUIRED

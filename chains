@@ -20,17 +20,18 @@ $| = 1;
 
 # flags
 
-my $HELP        = 0;
-my $YES         = 0;
-my $NO          = 0;
-my $INCREMENTAL = 0;
-my $FULL        = 0;
-my $PRINT       = 0;
-my $VERBOSE     = 0;
-my $RECOVER     = undef;
-my $VERIFY      = undef;
-my $MAIN_DIR    = undef;
-my $DIR         = undef;
+my $HELP            = 0;
+my $YES             = 0;
+my $NO              = 0;
+my $INCREMENTAL     = 0;
+my $FULL            = 0;
+my $PRINT           = 0;
+my $VERBOSE         = 0;
+my $NO_CHECK_DEVICE = 0;
+my $RECOVER         = undef;
+my $VERIFY          = undef;
+my $MAIN_DIR        = undef;
+my $DIR             = undef;
 
 sub check_command {
     my ($cmd) = @_;
@@ -81,6 +82,8 @@ sub usage {
     say "";
     say "  -n, --no                   Automatically answer no to all prompts";
     say "                             Overrides --yes";
+    say "      --no-check-device      Ignore device number changes when";
+    say "                             determining changed files";
     say "";
     say "Notes:";
     say "  1. GNU TAR IS REQUIRED";
@@ -400,9 +403,11 @@ sub make_backup {
     my $flags = $VERBOSE ? '-vg' : '-g';
     my @tar_command = ($tar, $flags, $snar_file,
                        '--one-file-system', '--xattrs',
-                       '--exclude-from', $exclude_patterns_file,
-                       '--files-from', $include_paths_file,
-                       '-czf',  $backup_file);
+                       '--exclude-from', $exclude_patterns_file);
+
+    push @tar_command, '--no-check-device' if $NO_CHECK_DEVICE;
+
+    push @tar_command, '--files-from', $include_paths_file, '-czf', $backup_file;
 
     my $tar_command_string = join ' ', map { $_ =~ /[\s]/ ? "'$_'" : $_ } @tar_command;
     say "INFO: Tar command: $tar_command_string";
@@ -578,6 +583,7 @@ GetOptions(
         'yes|y'              => \$YES,
         'no|n'               => \$NO,
         'main-directory|m=s' => \$MAIN_DIR,
+        'no-check-device'    => \$NO_CHECK_DEVICE,
         'incremental|i'      => \$INCREMENTAL,
         'full|f'             => \$FULL,
         'recover|r'          => sub { $RECOVER = 'latest' },
