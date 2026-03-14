@@ -95,6 +95,8 @@ sub usage {
     say "  3. Always verify your backups can be restored";
     say "";
     say "  4. EXCLUDE BACKUP DIR FROM BACKUP";
+    say "";
+    say "  5. CHECK AVAILABLE SPACE";
     exit 0;
 }
 

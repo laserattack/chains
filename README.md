@@ -63,6 +63,8 @@ Notes:
   3. Always verify your backups can be restored
 
   4. EXCLUDE BACKUP DIR FROM BACKUP
+
+  5. CHECK AVAILABLE SPACE
 ```
 
 # Examples
