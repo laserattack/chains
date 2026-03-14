@@ -65,6 +65,8 @@ Notes:
   4. EXCLUDE BACKUP DIR FROM BACKUP
 
   5. CHECK AVAILABLE SPACE
+
+  6. Run with sudo if backing up system files
 ```
 
 # Examples

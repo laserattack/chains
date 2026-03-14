@@ -97,6 +97,8 @@ sub usage {
     say "  4. EXCLUDE BACKUP DIR FROM BACKUP";
     say "";
     say "  5. CHECK AVAILABLE SPACE";
+    say "";
+    say "  6. Run with sudo if backing up system files";
     exit 0;
 }
 
