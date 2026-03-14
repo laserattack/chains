@@ -12,7 +12,7 @@ This entire script is essentially a convenient interface to `tar`
 
 # Usage
 
-If you're brave enough to use this, read the **Notes** first!!!!!
+**!!!! IF YOU'RE BRAVE ENOUGH TO USE THIS, READ THE NOTES FIRST !!!!**
 
 ```
 chains - incremental backups without any bullshit
