@@ -961,7 +961,7 @@ if (defined $DIR) {
     say color("INFO:", 32)." Now in: " . getcwd();
 }
 
-# TODO(20260324T121147): what about -r latest
+# latest by default
 if ($RECOVER) {
     my $timestamp = shift @ARGV;
 
@@ -983,6 +983,8 @@ if ($RECOVER) {
 # INFO: Exclude patterns file: /run/media/serr/KINGSTON/chains/exclude_patterns.txt
 # INFO: Backups dir: /run/media/serr/KINGSTON/chains/chains
 # ERROR: Start and end timestamps must be from the same chain
+
+# latest by default
 if ($VERIFY) {
     my $timestamp_pattern = qr/(?:$TIMESTAMP_FORMAT|latest)/;
     my $range             = shift @ARGV;
