@@ -961,6 +961,7 @@ if (defined $DIR) {
     say color("INFO:", 32)." Now in: " . getcwd();
 }
 
+# TODO(20260324T121147): what about -r latest
 if ($RECOVER) {
     my $timestamp = shift @ARGV;
 
@@ -973,6 +974,15 @@ if ($RECOVER) {
     say color("INFO:", 32)." Recovering state: $RECOVER";
 }
 
+# TODO(20260324T121220):
+# ~/projects/chains
+# [serr@lap]-> ./chains -w 260320T130508: -m $KINGSTON/chains/
+# INFO: Verify chain mode: 260320T130508:latest
+# INFO: Main dir: /run/media/serr/KINGSTON/chains/
+# INFO: Include paths file: /run/media/serr/KINGSTON/chains/include_paths.txt
+# INFO: Exclude patterns file: /run/media/serr/KINGSTON/chains/exclude_patterns.txt
+# INFO: Backups dir: /run/media/serr/KINGSTON/chains/chains
+# ERROR: Start and end timestamps must be from the same chain
 if ($VERIFY) {
     my $timestamp_pattern = qr/(?:$TIMESTAMP_FORMAT|latest)/;
     my $range             = shift @ARGV;
@@ -987,7 +997,7 @@ if ($VERIFY) {
     } elsif ($range =~ /^($timestamp_pattern):$/) {
         $VERIFY = $1.':latest';
     } elsif ($range =~ /^:$/) {
-        $VERIFY = 'latest:latest';
+        $VERIFY = 'latest';
     } else {
         unshift @ARGV, $range;
     }
