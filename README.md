@@ -1,4 +1,4 @@
-![chains](chains.jpg)
+![](pic.jpg)
 
 # Wtf??
 
