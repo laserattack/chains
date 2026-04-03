@@ -530,7 +530,7 @@ sub format_bytes {
     my ($bytes) = @_;
     my @units   = ('B', 'K', 'M', 'G', 'T', 'P');
 
-    return "0 B" if $bytes == 0;
+    return "0B" if $bytes == 0;
 
     my $unit = 0;
     my $size = $bytes;
@@ -565,7 +565,11 @@ sub print_chains_structure {
         }
         my $chain_size_str = format_bytes($chain_size);
 
-        say "┌─ Chain: $chain_name [COUNT $backups_count, SIZE $chain_size_str]";
+        if ($backups_count) {
+            say "┌─ Chain: $chain_name [COUNT $backups_count, SIZE $chain_size_str]";
+        } else {
+            say "── Chain: $chain_name [COUNT $backups_count, SIZE $chain_size_str]";
+        }
 
         foreach my $j (0 .. $backups_count - 1) {
             my $backup_name = $backups->[$j];
