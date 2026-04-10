@@ -447,7 +447,7 @@ sub verify_dir {
     my ($path) = @_;
     unless (-d $path) {
         log_info("'$path' is not a dir");
-        print color("INF:", 32)." Try to create '$path'? [Y/n] ";
+        print "Try to create '$path'? [Y/n] ";
         log_error("Cannot proceed without directory '$path'") unless go_ahead();
         eval { make_path($path); };
         log_error("Cannot create path '$path': $@") if $@;
@@ -461,7 +461,7 @@ sub verify_file {
     verify_dir(dirname($path)); # verify parent dir
     unless (-f $path) {
         log_info("'$path' is not a file");
-        print color("INF:", 32)." Try to create '$path'? [Y/n] ";
+        print "Try to create '$path'? [Y/n] ";
         log_error("Cannot proceed without file '$path'") unless go_ahead();
         eval {
             open my $fh, '>', $path or log_error("Cannot create file: $!");
@@ -479,7 +479,6 @@ sub get_chains_structure {
     my @chains_structure = ();
 
     # get all chains dirs
-    # TODO(20260410T175126): add similar repeating blocks to the function
     opendir(my $dh, $backups_dir) or log_error("Cannot open dir '$backups_dir': $!");
     my @chains = grep { -d "$backups_dir/$_" && /^since_$TIMESTAMP_FORMAT$/ } readdir($dh);
     closedir($dh) or log_error("Cannot close dir '$backups_dir': $!");
@@ -557,7 +556,7 @@ sub print_chains_structure {
 
             my $backup_path = File::Spec->catfile($backups_dir, $chain_name, $backup_name);
             my $backup_size = -s $backup_path;
-            $backup_info = $backup_size ? $backup_info.format_bytes($backup_size) : '??';
+            $backup_info    = $backup_size ? $backup_info.format_bytes($backup_size) : '??';
             say "$prefix $backup_name [$backup_info]";
         }
 
@@ -645,7 +644,7 @@ sub verify {
 
     my $exitcode = ($? >> 8);
 
-    log_error("Verification of '$path' failed with exit code: $exitcode. " .
+    log_error("Verification of '$path' failed with exit code: $exitcode. ".
               "Maybe you should delete this archive") unless $exitcode == 0;
     log_info("Verification successful for '$path'");
 }
