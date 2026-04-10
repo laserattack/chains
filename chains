@@ -266,30 +266,28 @@
 #     stackoverflow.com/questions/2001709/how-to-check-if-a-unix-tar-gz-file-is-a-valid-file-without-uncompressing
 
 
+use Cwd;
 use strict;
 use warnings;
-use feature 'say';
-use File::Path 'make_path';
 use File::Copy;
-use File::Basename;
 use File::Spec;
-use Cwd;
+use feature 'say';
+use File::Basename;
 use POSIX 'strftime';
+use File::Path 'make_path';
 use Getopt::Long qw\:config bundling\;
 
-#
+# constants
 my $MAIN_DIR_DEFAULT          = "$ENV{HOME}/.chains";
 my $TIMESTAMP_FORMAT          = qr/\d{6}T\d{6}/;
 my $TIMESTAMP_FORMAT_STRFTIME = '%y%m%dT%H%M%S';
 #
 
-my $USE_COLOR    = 0;
-
-# turn off buffering
-$| = 1;
+# global vars
+my $USE_COLOR = 0;
+#
 
 # flags
-
 my $HELP            = 0;
 my $YES             = 0;
 my $NO              = 0;
@@ -302,6 +300,7 @@ my $RECOVER         = undef;
 my $VERIFY          = undef;
 my $MAIN_DIR        = undef;
 my $DIR             = undef;
+#
 
 sub check_command {
     my ($cmd) = @_;
@@ -902,6 +901,9 @@ sub main {
         make_backup($info);
     } # if ($FULL || $INCREMENTAL)
 }
+
+# turn off buffering
+$| = 1;
 
 init_color();
 system('stty -echoctl 2>/dev/null');
