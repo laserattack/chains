@@ -60,17 +60,19 @@ Options:
 Notes (!!!!!!! PLS READ THIS !!!!!!!):
   1. GNU TAR IS REQUIRED
 
-  2. Interrupting backup creation may leave incomplete archives
+  2. NEVER RUN MULTIPLE chains PROCESSES WITH THE SAME MAIN DIRECTORY
 
-  3. Always verify your backups can be restored
+  3. Interrupting backup creation may leave incomplete archives
 
-  4. EXCLUDE BACKUP DIR FROM BACKUP
+  4. Always verify your backups can be restored
 
-  5. CHECK AVAILABLE SPACE
+  5. EXCLUDE BACKUP DIR FROM BACKUP
 
-  6. Run with sudo if backing up system files
+  6. CHECK AVAILABLE SPACE
 
-  7. IMPORTANT: After modifying include_paths.txt, create a new full backup (-f)
+  7. Run with sudo if backing up system files
+
+  8. IMPORTANT: After modifying include_paths.txt, create a new full backup (-f)
      The snar metadata file only tracks files that existed when it was created
      New paths won't be included in incremental backups without a fresh chain
      THIS IS HOW TAR WORKS. I DON'T LIKE IT EITHER!
